@@ -1,0 +1,69 @@
+:root {
+  --bg: #1f2a44;
+  --panel: #2b3a5c;
+  --text: #f2efe6;
+  --back: #3d4f7a;
+  --accent: #ffc857;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+.game { width: min(92vw, 460px); padding: 16px 0; text-align: center; }
+h1 { margin: 0 0 12px; font-size: clamp(1.6rem, 6vw, 2.2rem); letter-spacing: .5px; }
+.stats {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 8px; margin-bottom: 14px; font-size: 1.05rem;
+}
+button {
+  font: inherit; font-weight: 700; cursor: pointer;
+  padding: 8px 16px; border: 0; border-radius: 8px;
+  background: var(--accent); color: #1f2a44;
+}
+button:focus-visible, .card:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(6px, 2vw, 12px);
+  padding: clamp(8px, 2vw, 14px);
+  background: var(--panel);
+  border-radius: 14px;
+}
+.card {
+  aspect-ratio: 1;
+  position: relative;
+  padding: 0; border: 0; border-radius: 10px;
+  background: none;
+  perspective: 600px;
+  cursor: pointer;
+}
+.card-inner {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d;
+  transition: transform .45s;
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.face {
+  position: absolute; inset: 0;
+  border-radius: 10px;
+  backface-visibility: hidden;
+}
+.back {
+  background:
+    repeating-linear-gradient(45deg, rgba(255,255,255,.08) 0 6px, transparent 6px 12px),
+    var(--back);
+  border: 2px solid rgba(255,255,255,.15);
+}
+.front { transform: rotateY(180deg); background: var(--c); }
+.card.matched { cursor: default; }
+.card.matched .front { box-shadow: 0 0 0 3px var(--accent); }
+
+.message { min-height: 1.6em; margin: 14px 0 0; font-size: 1.25rem; font-weight: 700; color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .card-inner { transition: none; } }
